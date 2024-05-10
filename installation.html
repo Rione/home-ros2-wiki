@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="ja" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ROS 2のインストール &#8212; ros2-wiki  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <script src="_static/documentation_options.js?v=c033477b"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/translations.js?v=4dbe4bdc"></script>
+    <link rel="index" title="索引" href="genindex.html" />
+    <link rel="search" title="検索" href="search.html" />
+    <link rel="next" title="ROS 2プログラミング" href="programming.html" />
+    <link rel="prev" title="ROS 2とは?" href="introduction.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="ros-2">
+<h1>ROS 2のインストール<a class="headerlink" href="#ros-2" title="Link to this heading">¶</a></h1>
+<p>ROS 2では主にUbuntu上で開発します。
+なので、皆さんのPCにUbuntuとROS 2をインストールして開発してもいます。</p>
+<section id="ubuntu-22-04">
+<h2>Ubuntu 22.04のインストール<a class="headerlink" href="#ubuntu-22-04" title="Link to this heading">¶</a></h2>
+<p>この部分はなるべく経験者や先輩と一緒に行いましょう。
+最悪の場合、<strong>パソコンのデータをすべて消す</strong>可能性もあるので…</p>
+<section id="id1">
+<h3>データのバックアップ<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>万が一の場合を考えて、パソコンの必要なデータをバックアップしてください。</p>
+</section>
+<section id="iso">
+<h3>ISOファイルの入手<a class="headerlink" href="#iso" title="Link to this heading">¶</a></h3>
+<p>Ubuntuの<a class="reference external" href="https://ubuntu.com/download/desktop">ダウンロードページ</a>からISOファイルを入手します。
+余裕があれば、ファイルのチェックサムを確認して正しいファイルをダウンロードしたか確認します。
+ISOファイルが入手出来たら<a class="reference external" href="https://rufus.ie/en/">Rufus</a>や<a class="reference external" href="https://etcher.balena.io/">Etcher</a>などのツールを使ってUSBメモリにイメージを書き込みます。</p>
+<p>Windowsを使っている人は他にもBitLockerの設定やセキュアブートの無効化など、必要に応じて行ってください。</p>
+</section>
+</section>
+<section id="ubuntu">
+<h2>Ubuntuのインストール<a class="headerlink" href="#ubuntu" title="Link to this heading">¶</a></h2>
+<p>ISOファイルを書き込んだUSBメモリをパソコンに差し込んで、USBメモリから起動するように指定してください。
+あとはGUIのインストーラーが何をすればいいのか、案内してくれるのでそれに従ってください。
+ここでデュアルブートにするかも指定できるので、先輩やパソコンのディスクの容量と相談して設定してください。</p>
+<p>Ubuntuのインストールが終わったらパッケージの更新を行いましょう。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt update
+sudo apt upgrade
+</pre></div>
+</div>
+<p>ついでに<a class="reference external" href="https://gnome-terminator.org/">Terminator</a>をインストールしましょう。
+Terminatorは画面を複数に分割出来るターミナルです。
+デバッグ中に複数のターミナルを開く必要があるので必須級のパッケージです。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install terminator
+</pre></div>
+</div>
+<p>あとは自分の好きなテキストエディタなどをインストールしておきましょう。</p>
+</section>
+<section id="vscode">
+<h2>VSCodeのインストール<a class="headerlink" href="#vscode" title="Link to this heading">¶</a></h2>
+<p>ユーザ数が多いのでVSCodeのインストール方法はここに載せておきます。
+ほぼ<a class="reference external" href="https://code.visualstudio.com/docs/setup/linux">公式ページ</a>からの引用です。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt-get install wget gpg apt-transport-https
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor &gt; packages.microsoft.gpg
+sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+sudo sh -c &#39;echo &quot;deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main&quot; &gt; /etc/apt/sources.list.d/vscode.list&#39;
+rm -f packages.microsoft.gpg
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2>ROS 2のセットアップ<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p><a class="reference external" href="https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html">公式のページ</a>
+ではコマンドをひとつひとつ打ち込みながら解説しています。
+ただかなり説明が長いので、コマンドを一つにまとめた
+<a class="reference external" href="https://github.com/Rione/home_ros2_setup">シェルスクリプト</a>
+を実行します。</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo apt install git
+git clone https://github.com/Rione/home_ros2_setup
+cd home_ros2_setup
+./setup.bash
+</pre></div>
+</div>
+<p>以上のように実行するとROS 2を使える環境が整います。
+このスクリプトは1000個以上のパッケージをダウンロードするので時間がかかるかもしれません。</p>
+</section>
+<section id="id3">
+<h2>参照<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html">https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html</a></p></li>
+<li><p><a class="reference external" href="https://code.visualstudio.com/docs/setup/linux">https://code.visualstudio.com/docs/setup/linux</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Rione/home_ros2_setup">https://github.com/Rione/home_ros2_setup</a></p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">ros2-wiki</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">ROS 2とは?</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ROS 2のインストール</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#ubuntu-22-04">Ubuntu 22.04のインストール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#ubuntu">Ubuntuのインストール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#vscode">VSCodeのインストール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">ROS 2のセットアップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">参照</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="programming.html">ROS 2プログラミング</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="introduction.html" title="前の章へ">ROS 2とは?</a></li>
+      <li>Next: <a href="programming.html" title="次の章へ">ROS 2プログラミング</a></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Ri-one.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="_sources/installation.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

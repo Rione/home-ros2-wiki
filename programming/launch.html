@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html lang="ja" data-content_root="../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Launchファイル &#8212; ros2-wiki  ドキュメント</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d1102ebc" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css?v=12dfc556" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <script src="../_static/documentation_options.js?v=c033477b"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/translations.js?v=4dbe4bdc"></script>
+    <link rel="index" title="索引" href="../genindex.html" />
+    <link rel="search" title="検索" href="../search.html" />
+    <link rel="prev" title="パラメータ" href="parameter.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+
+  
+  
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="launch">
+<h1>Launchファイル<a class="headerlink" href="#launch" title="Link to this heading">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">注釈</p>
+<p>ここでは
+<a class="reference internal" href="topic.html"><span class="doc">トピック通信</span></a>
+で作った<code class="docutils literal notranslate"><span class="pre">hello_topic</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">iteration_node</span></code>ノードと
+<a class="reference internal" href="parameter.html"><span class="doc">パラメータ</span></a>
+で作った<code class="docutils literal notranslate"><span class="pre">hello_param</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">multiply_node</span></code>ノードを使います。
+まだ作ってない人は先に、そちらをご覧ください。</p>
+</div>
+<section id="id1">
+<h2>Launchファイルとは?<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h2>
+<p>ROSでは複数のノードを同時に立ち上げて、それぞれのノードからデータを送受信したりしています。
+今までは<code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">run</span></code>コマンドで1つ1つノードを立ち上げていましたが、実際には複数のノードをLaunchファイルというもので起動します。
+このLaunchファイルではトピック名やノード名、パラメータを変更出来るので非常に便利です。</p>
+<p>今回は以下のようなLaunchファイルをもつ<code class="docutils literal notranslate"><span class="pre">hello_launch</span></code>パッケージを作りましょう。</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">hello.launch.py</span></code></p>
+<ul>
+<li><p>以下の2つのノードを立ち上げるLaunchファイル</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">hello_topic</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">iteration_node.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hello_topic</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">double_node.py</span></code></p></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">two_double.launch.py</span></code></p>
+<ul>
+<li><p>以下の3つのノードを立ち上げるLaunchファイル</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">hello_topic</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">iteration_node.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hello_topic</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">double_node.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hello_topic</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">double_node.py</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">double_node</span></code>ノードを<code class="docutils literal notranslate"><span class="pre">quad_node</span></code>ノードに変更</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/number</span></code>トピックを<code class="docutils literal notranslate"><span class="pre">/double_number</span></code>トピックにリマップ</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/double_number</span></code>トピックを<code class="docutils literal notranslate"><span class="pre">/quad_number</span></code>トピックにリマップ</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">double_and_multiply.launch.py</span></code></p>
+<ul>
+<li><p>以下の3つのノードを立ち上げるLaunchファイル</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">hello_topic</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">iteration_node.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hello_topic</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">double_node.py</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">hello_param</span></code>パッケージの<code class="docutils literal notranslate"><span class="pre">multiply_node.py</span></code></p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">/number</span></code>トピックを<code class="docutils literal notranslate"><span class="pre">/double_number</span></code>トピックにリマップ</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">m_number</span></code>パラメータを<code class="docutils literal notranslate"><span class="pre">4</span></code>に変更</p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h2>パッケージの作成<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ros2 pkg create --build-type ament_cmake hello_launch
+cd hello_launch
+mkdir launch
+</pre></div>
+</div>
+</section>
+<section id="cmakelists-txt">
+<h2>CMakelists.txtの編集<a class="headerlink" href="#cmakelists-txt" title="Link to this heading">¶</a></h2>
+<p>以下の3行を<code class="docutils literal notranslate"><span class="pre">CMakelists.txt</span></code>に追加</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="c"># 追加</span>
+<span class="nb">install</span><span class="p">(</span>
+<span class="w">  </span><span class="s">DIRECTORY</span><span class="w"> </span><span class="s">launch</span>
+<span class="w">  </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">share/</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>最終的な<code class="docutils literal notranslate"><span class="pre">CMakelists.txt</span></code>は以下のようになります。</p>
+<div class="highlight-cmake notranslate"><div class="highlight"><pre><span></span><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span><span class="w"> </span><span class="s">3.8</span><span class="p">)</span>
+<span class="nb">project</span><span class="p">(</span><span class="s">hello_launch</span><span class="p">)</span>
+
+<span class="nb">if</span><span class="p">(</span><span class="s">CMAKE_COMPILER_IS_GNUCXX</span><span class="w"> </span><span class="s">OR</span><span class="w"> </span><span class="s">CMAKE_CXX_COMPILER_ID</span><span class="w"> </span><span class="s">MATCHES</span><span class="w"> </span><span class="s2">&quot;Clang&quot;</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">add_compile_options</span><span class="p">(</span><span class="s">-Wall</span><span class="w"> </span><span class="s">-Wextra</span><span class="w"> </span><span class="s">-Wpedantic</span><span class="p">)</span>
+<span class="nb">endif</span><span class="p">()</span>
+
+<span class="c"># find dependencies</span>
+<span class="nb">find_package</span><span class="p">(</span><span class="s">ament_cmake</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="c"># uncomment the following section in order to fill in</span>
+<span class="c"># further dependencies manually.</span>
+<span class="c"># find_package(&lt;dependency&gt; REQUIRED)</span>
+
+<span class="c"># 追加</span>
+<span class="nb">install</span><span class="p">(</span>
+<span class="w">  </span><span class="s">DIRECTORY</span><span class="w"> </span><span class="s">launch</span>
+<span class="w">  </span><span class="s">DESTINATION</span><span class="w"> </span><span class="s">share/</span><span class="o">${</span><span class="nv">PROJECT_NAME</span><span class="o">}</span>
+<span class="p">)</span>
+
+<span class="nb">if</span><span class="p">(</span><span class="s">BUILD_TESTING</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">find_package</span><span class="p">(</span><span class="s">ament_lint_auto</span><span class="w"> </span><span class="s">REQUIRED</span><span class="p">)</span>
+<span class="w">  </span><span class="c"># the following line skips the linter which checks for copyrights</span>
+<span class="w">  </span><span class="c"># comment the line when a copyright and license is added to all source files</span>
+<span class="w">  </span><span class="nb">set</span><span class="p">(</span><span class="s">ament_cmake_copyright_FOUND</span><span class="w"> </span><span class="s">TRUE</span><span class="p">)</span>
+<span class="w">  </span><span class="c"># the following line skips cpplint (only works in a git repo)</span>
+<span class="w">  </span><span class="c"># comment the line when this package is in a git repo and when</span>
+<span class="w">  </span><span class="c"># a copyright and license is added to all source files</span>
+<span class="w">  </span><span class="nb">set</span><span class="p">(</span><span class="s">ament_cmake_cpplint_FOUND</span><span class="w"> </span><span class="s">TRUE</span><span class="p">)</span>
+<span class="w">  </span><span class="nb">ament_lint_auto_find_test_dependencies</span><span class="p">()</span>
+<span class="nb">endif</span><span class="p">()</span>
+
+<span class="nb">ament_package</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="hello-launch-py">
+<h2>hello.launch.pyのコード<a class="headerlink" href="#hello-launch-py" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">hello_launch/launch/hello.launch.py</span></code>を以下の内容で書き込む。</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<span class="kn">from</span> <span class="nn">launch_ros.actions</span> <span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+        <span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;hello_topic&#39;</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;iteration_node&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;iteration_node&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;hello_topic&#39;</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;double_node&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;double_node&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="two-double-launch-py">
+<h2>two_double.launch.pyのコード<a class="headerlink" href="#two-double-launch-py" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">hello_launch/launch/two_double.launch.py</span></code>を以下の内容で書き込む。</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<span class="kn">from</span> <span class="nn">launch_ros.actions</span> <span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+        <span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;hello_topic&#39;</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;iteration_node&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;iteration_node&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;hello_topic&#39;</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;double_node&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;double_node&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;hello_topic&#39;</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;double_node&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;quad_node&#39;</span><span class="p">,</span>
+            <span class="n">remappings</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;/number&#39;</span><span class="p">,</span> <span class="s1">&#39;/double_number&#39;</span><span class="p">),</span>
+                <span class="p">(</span><span class="s1">&#39;/double_number&#39;</span><span class="p">,</span> <span class="s1">&#39;/quad_number&#39;</span><span class="p">),</span>
+            <span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="double-and-multiply-launch-py">
+<h2>double_and_multiply.launch.pyのコード<a class="headerlink" href="#double-and-multiply-launch-py" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">hello_launch/launch/double_and_multiply.launch.py</span></code>を以下の内容で書き込む。</p>
+<div class="highlight-py notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">launch</span> <span class="kn">import</span> <span class="n">LaunchDescription</span>
+<span class="kn">from</span> <span class="nn">launch_ros.actions</span> <span class="kn">import</span> <span class="n">Node</span>
+
+<span class="k">def</span> <span class="nf">generate_launch_description</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">LaunchDescription</span><span class="p">([</span>
+        <span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;hello_topic&#39;</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;iteration_node&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;iteration_node&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;hello_topic&#39;</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;double_node&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;double_node&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="n">Node</span><span class="p">(</span>
+            <span class="n">package</span><span class="o">=</span><span class="s1">&#39;hello_param&#39;</span><span class="p">,</span>
+            <span class="n">executable</span><span class="o">=</span><span class="s1">&#39;multiply_node&#39;</span><span class="p">,</span>
+            <span class="n">name</span><span class="o">=</span><span class="s1">&#39;multiply_node&#39;</span><span class="p">,</span>
+            <span class="n">remappings</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">(</span><span class="s1">&#39;/number&#39;</span><span class="p">,</span> <span class="s1">&#39;/double_number&#39;</span><span class="p">),</span>
+            <span class="p">],</span>
+            <span class="n">parameters</span><span class="o">=</span><span class="p">[</span>
+                <span class="p">{</span><span class="s1">&#39;m_number&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">},</span>
+            <span class="p">]</span>
+        <span class="p">),</span>
+    <span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2>ビルドと実行<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h2>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>cd ~/my_ws
+colcon build
+source install/setup.bash
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ros2</span> <span class="pre">launch</span></code>コマンドでLaunchファイルを立ち上げましょう。
+立ち上がったら<code class="docutils literal notranslate"><span class="pre">rqt_graph</span></code>でノード間の通信の様子や<code class="docutils literal notranslate"><span class="pre">rqt</span></code>を使ってトピックを見てみましょう。</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p><code class="docutils literal notranslate"><span class="pre">rqt</span></code>でトピックを見るには<code class="docutils literal notranslate"><span class="pre">Plugins</span></code>タブから<code class="docutils literal notranslate"><span class="pre">Topics</span></code>、<code class="docutils literal notranslate"><span class="pre">Topics</span></code>から<code class="docutils literal notranslate"><span class="pre">Topic</span> <span class="pre">Monitor</span></code>を選択してトピックの様子を見てみましょう。</p>
+</div>
+<section id="id4">
+<h3>hello.launch.py<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ros2 launch hello_launch hello.launch.py
+</pre></div>
+</div>
+<p>ノード間の通信の図は既に
+<a class="reference internal" href="hello-world.html"><span class="doc">Hello world</span></a>
+で紹介したグラフと同じなので省略します。</p>
+</section>
+<section id="id5">
+<h3>two_double.launch.py<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ros2 launch hello_launch two_double.launch.py
+rqt_graph
+rqt
+</pre></div>
+</div>
+<p>rqt_graph</p>
+<p><img alt="two-double-rqt-graph.png" src="../_images/two-double-rqt-graph.png" /></p>
+<p>rqtでトピックを見た様子</p>
+<p><img alt="1715350303932826969.png" src="../_images/1715350303932826969.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">/number</span></code>トピックの値を2倍したものが<code class="docutils literal notranslate"><span class="pre">/double_number</span></code>へ、<code class="docutils literal notranslate"><span class="pre">/double_number</span></code>トピックの値をさらに2倍したものが<code class="docutils literal notranslate"><span class="pre">/quad_number</span></code>へ送られているのが分かります。</p>
+</section>
+<section id="id6">
+<h3>double_and_multiply.launch.py<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ros2 launch hello_launch double_and_multiply.launch.py
+rqt_graph
+rqt
+</pre></div>
+</div>
+<p>rqt_graph</p>
+<p><img alt="double-and-multiply-rqt-graph.png" src="../_images/double-and-multiply-rqt-graph.png" /></p>
+<p>rqtでトピックを見た様子</p>
+<p><img alt="1715350785700950579.png" src="../_images/1715350785700950579.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">/number</span></code>トピックの値を2倍したものが<code class="docutils literal notranslate"><span class="pre">/double_number</span></code>へ、<code class="docutils literal notranslate"><span class="pre">/double_number</span></code>トピックの値をさらにパラメータで指定した4倍にしたものが<code class="docutils literal notranslate"><span class="pre">/multiplied_number</span></code>へ送られているのが分かります。</p>
+</section>
+</section>
+<section id="id7">
+<h2>参照<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html">https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html</a></p></li>
+</ul>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">ros2-wiki</a></h1>
+
+
+
+
+
+
+
+
+<h3>ナビゲーション</h3>
+<p class="caption" role="heading"><span class="caption-text">目次</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">ROS 2とは?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">ROS 2のインストール</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../programming.html">ROS 2プログラミング</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="hello-world.html">Hello world</a></li>
+<li class="toctree-l2"><a class="reference internal" href="communication-type.html">通信の種類</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom-message.html">自作メッセージ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topic.html">トピック通信</a></li>
+<li class="toctree-l2"><a class="reference internal" href="service.html">サービス通信</a></li>
+<li class="toctree-l2"><a class="reference internal" href="parameter.html">パラメータ</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Launchファイル</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../programming.html">ROS 2プログラミング</a><ul>
+      <li>Previous: <a href="parameter.html" title="前の章へ">パラメータ</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">クイック検索</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="検索" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &#169;2024, Ri-one.
+      
+      |
+      Powered by <a href="https://www.sphinx-doc.org/">Sphinx 7.3.7</a>
+      &amp; <a href="https://alabaster.readthedocs.io">Alabaster 0.7.16</a>
+      
+      |
+      <a href="../_sources/programming/launch.md.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
