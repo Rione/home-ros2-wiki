@@ -31,8 +31,8 @@ class Multiply(Node):
         super().__init__("multiply_node")
         self.number_sub = self.create_subscription(UInt64, "number", self.number_callback, 10)
         self.double_number_pub = self.create_publisher(UInt64, "multiplied_number", 10)
-        self.declare_parameter("m_parameter", 2)
-        self.m = self.get_parameter("m_parameter").get_parameter_value().integer_value
+        self.declare_parameter("m_number", 2)
+        self.m = self.get_parameter("m_number").get_parameter_value().integer_value
 
     def number_callback(self, sub_msg):
         self.get_logger().info("Subscribed {}".format(sub_msg.data))
