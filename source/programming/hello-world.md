@@ -212,7 +212,7 @@ rqt_graph
 
 すると以下のように通信の様子がグラフで表されます。
 
-![rqt_graphでのトピック通信の様子](hello-world-rqt.png)
+![rqt_graphでのトピック通信の様子](hello-world-rqt-graph.png)
 
 今回の場合、`/publisher`ノードから`/text`トピックを介して`/subscriber`ノードに通信が行われていることが分かります。
 
