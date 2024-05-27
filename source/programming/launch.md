@@ -41,7 +41,7 @@ ROSでは複数のノードを同時に立ち上げて、それぞれのノー�
 
 ## パッケージの作成
 
-```none
+```bash
 ros2 pkg create --build-type ament_cmake hello_launch
 cd hello_launch
 mkdir launch
@@ -187,7 +187,7 @@ def generate_launch_description():
 
 ## ビルドと実行
 
-```none
+```bash
 cd ~/my_ws
 colcon build
 source install/setup.bash
@@ -202,7 +202,7 @@ source install/setup.bash
 
 ### hello.launch.py
 
-```none
+```bash
 ros2 launch hello_launch hello.launch.py
 ```
 
@@ -213,7 +213,7 @@ ros2 launch hello_launch hello.launch.py
 
 ### two_double.launch.py
 
-```none
+```bash
 ros2 launch hello_launch two_double.launch.py
 rqt_graph
 rqt
@@ -231,7 +231,7 @@ rqtでトピックを見た様子
 
 ### double_and_multiply.launch.py
 
-```none
+```bash
 ros2 launch hello_launch double_and_multiply.launch.py
 rqt_graph
 rqt

@@ -19,7 +19,7 @@ TCP/IP通信をイメージすると分かりやすいと思います。
 
 ## パッケージの作成
 
-```none
+```bash
 ros2 pkg create --build-type ament_python hello_service
 ```
 
@@ -135,13 +135,13 @@ setup(
 
 ## ビルドと実行
 
-```none
+```bash
 cd ~/my_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-```none
+```bash
 ros2 run hello_service server_node
 ros2 run hello_service client_node
 ```

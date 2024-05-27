@@ -11,7 +11,7 @@
 
 ## パッケージの作成
 
-```none
+```bash
 ros2 pkg create --build-type ament_cmake hello_msgs
 ```
 
@@ -28,7 +28,7 @@ ros2 pkg create --build-type ament_cmake hello_msgs
 
 トピック通信で使うメッセージファイルはパッケージの`msg`フォルダで`.msg`ファイルで定義します。
 
-```none
+```bash
 mkdir srv
 ```
 
@@ -54,7 +54,7 @@ uint8 age
 
 サービス通信で使うメッセージファイルはパッケージの`srv`フォルダで`.srv`ファイルで定義します。
 
-```none
+```bash
 mkdir srv
 ```
 
@@ -157,7 +157,7 @@ ament_package()
 
 ## ビルド
 
-```none
+```bash
 cd ~/my_ws
 colcon build
 source install/setup.bash
@@ -165,7 +165,7 @@ source install/setup.bash
 
 `ros2 interface show`コマンドで作ったメッセージの型を確認しましょう。
 
-```none
+```bash
 $ ros2 interface show hello_msgs/msg/Person 
 string name
 uint8 age

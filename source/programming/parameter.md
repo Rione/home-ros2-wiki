@@ -13,7 +13,7 @@ ROSではパラメータというものを設定することが出来ます。
 
 ## パッケージの作成
 
-```none
+```bash
 ros2 pkg create --build-type ament_python hello_param
 ```
 
@@ -89,20 +89,20 @@ setup(
 
 ## ビルドと実行
 
-```none
+```bash
 cd ~/my_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-```none
+```bash
 ros2 run hello_topic iteration_node
 ros2 run hello_param multiply_node
 ```
 
 次に作った`m_number`パラメータを`3`に変更してノードを実行してみましょう。
 
-```none
+```bash
 ros2 run hello_topic iteration_node
 ros2 run hello_param multiply_node --ros-args -p m_number:=3
 ```

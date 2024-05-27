@@ -10,14 +10,14 @@ ROS 2ではパッケージという単位でソースコードを管理します
 ここでは`my_ws`というワークスペースで作業します。
 ホームディレクトリに新しくワークスペースフォルダを作りましょう。
 
-```none
+```bash
 mkdir ~/my_ws
 cd ~/my_ws
 ```
 
 `my_ws`の`src`ディレクトリに`hello_world`パッケージを作成します。
 
-```none
+```bash
 mkdir -p ~/my_ws/src
 cd ~/my_ws/src
 ros2 pkg create --build-type ament_python hello_world
@@ -28,7 +28,7 @@ ros2 pkg create --build-type ament_python hello_world
 
 `tree`コマンドでパッケージの構成を確認してみると以下のようになっています。
 
-```
+```bash
 $ tree
 .
 ├── hello_world
@@ -171,7 +171,7 @@ if __name__ == "__main__":
 
 `~/my_ws`で`colcon build`コマンドでビルドしてください。
 
-```none
+```bash
 cd ~/my_ws
 colcon build
 ```
@@ -180,15 +180,27 @@ colcon build
 必ず、ワークスペースのルートディレクトリで`colcon build`コマンドを実行してください。
 ```
 
-次にセットアップファイルを`source`もしくは`.`コマンドで読み込んでください。
+`colcon build`コマンドを実行すると`my_ws`に新たに、`build`、`install`、`log`ディレクトリが作成されます。
 
-```none
+```bash
+$ ls
+build  install  log  src
+```
+新たに作られた3つのディレクトリは以下のようなファイルを含みます。
+
+- `build` - ビルド時に生成される一時的なファイル
+- `log` - ビルド時のログファイル
+- `install` - ビルドで生成された実行可能ファイル
+
+次にビルドして生成されたセットアップファイルを`source`もしくは`.`コマンドで読み込んでください。
+
+```bash
 source install/setup.bash
 ```
 
 セットアップファイルを読み込んだら、2つ端末を用意して`ros2 run`コマンドでパブリッシャとサブスクライバを実行してみましょう。
 
-```none
+```bash
 ros2 run hello_world pub_node
 ros2 run hello_world sub_node
 ```
@@ -206,7 +218,7 @@ ros2 run hello_world sub_node
 rqt_graphという可視化ツールを使ってトピック通信の様子を見てみましょう。
 もう1つ端末を開いて`rqt_graph`コマンドを実行しましょう。
 
-```none
+```bash
 rqt_graph
 ```
 
