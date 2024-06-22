@@ -1,5 +1,11 @@
 # Launchファイル
 
+## Launchファイルとは?
+
+ROSでは複数のノードを同時に立ち上げて、それぞれのノードからデータを送受信したりしています。
+今までは`ros2 run`コマンドで1つ1つノードを立ち上げていましたが、実際には複数のノードをLaunchファイルというもので起動します。
+このLaunchファイルではトピック名やノード名、パラメータの値を変更出来るので非常に便利です。
+
 ```{note}
 ここでは
 {doc}`/programming/topic`
@@ -9,11 +15,7 @@
 まだ作ってない人は先に、そちらをご覧ください。
 ```
 
-## Launchファイルとは?
-
-ROSでは複数のノードを同時に立ち上げて、それぞれのノードからデータを送受信したりしています。
-今までは`ros2 run`コマンドで1つ1つノードを立ち上げていましたが、実際には複数のノードをLaunchファイルというもので起動します。
-このLaunchファイルではトピック名やノード名、パラメータを変更出来るので非常に便利です。
+### 今回の目標
 
 今回は以下のようなLaunchファイルをもつ`hello_launch`パッケージを作りましょう。
 
@@ -37,9 +39,14 @@ ROSでは複数のノードを同時に立ち上げて、それぞれのノー�
             - `/number`トピックを`/double_number`トピックにリマップ
             - `m_number`パラメータを`4`に変更
 
+```{note}
+今回はPythonでLaunchファイル書きますが、YAMLやROS 1時代ののXMLでもLaunchファイルを書けます。
+詳しくは[公式のチュートリアル(英語)](https://docs.ros.org/en/humble/How-To-Guides/Launch-file-different-formats.html)を読んでください。
+```
+
 ## パッケージの作成
 
-```none
+```bash
 ros2 pkg create --build-type ament_cmake hello_launch
 cd hello_launch
 mkdir launch
@@ -185,7 +192,7 @@ def generate_launch_description():
 
 ## ビルドと実行
 
-```none
+```bash
 cd ~/my_ws
 colcon build
 source install/setup.bash
@@ -200,7 +207,7 @@ source install/setup.bash
 
 ### hello.launch.py
 
-```none
+```bash
 ros2 launch hello_launch hello.launch.py
 ```
 
@@ -211,40 +218,41 @@ ros2 launch hello_launch hello.launch.py
 
 ### two_double.launch.py
 
-```none
+```bash
 ros2 launch hello_launch two_double.launch.py
 rqt_graph
 rqt
 ```
 
+```{figure} launch-two-double-rqt-graph.png
 rqt_graph
+```
 
-![two-double-rqt-graph.png](two-double-rqt-graph.png)
-
+```{figure} launch-two-double-rqt.png
 rqtでトピックを見た様子
-
-![1715350303932826969.png](1715350303932826969.png)
+```
 
 `/number`トピックの値を2倍したものが`/double_number`へ、`/double_number`トピックの値をさらに2倍したものが`/quad_number`へ送られているのが分かります。
 
 ### double_and_multiply.launch.py
 
-```none
+```bash
 ros2 launch hello_launch double_and_multiply.launch.py
 rqt_graph
 rqt
 ```
 
+```{figure} launch-double-and-multiply-rqt-graph.png
 rqt_graph
+```
 
-![double-and-multiply-rqt-graph.png](double-and-multiply-rqt-graph.png)
-
+```{figure} launch-double-and-multiply-rqt.png
 rqtでトピックを見た様子
-
-![1715350785700950579.png](1715350785700950579.png)
+```
 
 `/number`トピックの値を2倍したものが`/double_number`へ、`/double_number`トピックの値をさらにパラメータで指定した4倍にしたものが`/multiplied_number`へ送られているのが分かります。
 
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html)
+- [hello_launchパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_launch)

@@ -28,7 +28,7 @@ ISOファイルを書き込んだUSBメモリをパソコンに差し込んで�
 
 Ubuntuのインストールが終わったらパッケージの更新を行いましょう。
 
-```none
+```bash
 sudo apt update
 sudo apt upgrade
 ```
@@ -37,7 +37,7 @@ sudo apt upgrade
 Terminatorは画面を複数に分割出来るターミナルです。
 デバッグ中に複数のターミナルを開く必要があるので必須級のパッケージです。
 
-```none
+```bash
 sudo apt install terminator
 ```
 
@@ -48,7 +48,7 @@ sudo apt install terminator
 ユーザ数が多いのでVSCodeのインストール方法はここに載せておきます。
 ほぼ[公式ページ](https://code.visualstudio.com/docs/setup/linux)からの引用です。
 
-```none
+```bash
 sudo apt-get install wget gpg apt-transport-https
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
@@ -64,7 +64,7 @@ rm -f packages.microsoft.gpg
 [シェルスクリプト](https://github.com/Rione/home_ros2_setup)
 を実行します。
 
-```none
+```bash
 sudo apt install git
 git clone https://github.com/Rione/home_ros2_setup
 cd home_ros2_setup

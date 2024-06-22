@@ -13,7 +13,7 @@ ROSではパラメータというものを設定することが出来ます。
 
 ## パッケージの作成
 
-```none
+```bash
 ros2 pkg create --build-type ament_python hello_param
 ```
 
@@ -55,29 +55,66 @@ if __name__ == "__main__":
     main()
 ```
 
+## setup.pyの編集
+
+```py
+from setuptools import find_packages, setup
+
+package_name = 'hello_param'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=find_packages(exclude=['test']),
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ri-one',
+    maintainer_email='ri-one@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            # この1行を追加
+            'multiply_node = hello_param.multiply_node:main',
+        ],
+    },
+)
+```
+
 ## ビルドと実行
 
-```none
+```bash
 cd ~/my_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-```none
+```bash
 ros2 run hello_topic iteration_node
 ros2 run hello_param multiply_node
 ```
 
 次に作った`m_number`パラメータを`3`に変更してノードを実行してみましょう。
 
-```none
+```bash
 ros2 run hello_topic iteration_node
 ros2 run hello_param multiply_node --ros-args -p m_number:=3
 ```
 
 `multiply_node`が`/number`トピックの3倍した数を`multiplied_number`トピックにパブリッシュしていれば成功!
 
+```{figure} parameter-terminal-output.png
+端末での実行画面
+```
+
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html)
 - [https://www.theconstruct.ai/how-to-manipulate-parameters-at-runtime-ros2-humble-python-tutorial/](https://www.theconstruct.ai/how-to-manipulate-parameters-at-runtime-ros2-humble-python-tutorial/)
+- [hello_paramパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_param)

@@ -1,5 +1,13 @@
 # トピック通信
 
+## トピック通信とは?
+
+トピック通信ではデータを送る**パブリッシャ**とデータを受け取る**サブスクライバ**が存在します。
+パブリッシャは任意のトピックにデータを連続的に送り続け、サブスクライバは任意のトピックに送られたデータを受け取ることができます。
+UDP通信をイメージすると分かりやすいと思います。
+
+### 今回の目標
+
 今回は以下のようなノードをもつ`hello_topic`パッケージを作ってみましょう
 
 - `iteration_node.py`
@@ -11,7 +19,7 @@
 
 ## パッケージの作成
 
-```none
+```bash
 ros2 pkg create --build-type ament_python hello_topic
 ```
 
@@ -35,7 +43,8 @@ class Iteration(Node):
         msg = UInt64()
         msg.data = self.i
         self.number_pub.publish(msg)
-        self.get_logger().info("Publishing {}".format(msg.data))
+
+        self.get_logger().info(f"Publishing {msg.data}")
 
         self.i += 1
 
@@ -68,12 +77,13 @@ class Double(Node):
         self.double_number_pub = self.create_publisher(UInt64, "double_number", 10)
 
     def number_callback(self, sub_msg):
-        self.get_logger().info("Subscribed {}".format(sub_msg.data))
-        
+        self.get_logger().info(f"Subscribed {sub_msg.data}")
+
         pub_msg = UInt64()
         pub_msg.data = sub_msg.data * 2
         self.double_number_pub.publish(pub_msg)
-        self.get_logger().info("Publishing {}".format(pub_msg.data))
+
+        self.get_logger().info(f"Publishing {pub_msg.data}")
 
 def main(args=None):
     rclpy.init(args=args)
@@ -88,17 +98,54 @@ if __name__ == "__main__":
     main()
 ```
 
+## setup.pyの編集
+
+```py
+from setuptools import find_packages, setup
+
+package_name = 'hello_topic'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=find_packages(exclude=['test']),
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ri-one',
+    maintainer_email='ri-one@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            # この2行を追加
+            'iteration_node = hello_topic.iteration_node:main',
+            'double_node = hello_topic.double_node:main',
+        ],
+    },
+)
+```
+
 ## ビルドと実行
 
-```none
+```bash
 cd ~/my_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-```none
+```bash
 ros2 run hello_topic iteration_node
 ros2 run hello_topic double_node
+```
+
+```{figure} topic-terminal-output.png
+端末での実行画面
 ```
 
 ## 課題
@@ -117,3 +164,4 @@ ros2 run hello_topic double_node
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
+- [hello_topicパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_topic)

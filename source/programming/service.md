@@ -1,5 +1,13 @@
 # サービス通信
 
+## サービス通信とは?
+
+サービス通信では**クライアント**と**サーバ**が存在します。
+クライアントはデータをリクエストしてサーバからのレスポンスを受け取り、サーバはクライアントからのリクエストに応じてレスポンスを送ります。
+TCP/IP通信をイメージすると分かりやすいと思います。
+
+### 今回の目標
+
 今回は以下のようなノードをもつ`hello_service`パッケージを作ってみましょう。
 
 - `server_node.py`
@@ -11,7 +19,7 @@
 
 ## パッケージの作成
 
-```none
+```bash
 ros2 pkg create --build-type ament_python hello_service
 ```
 
@@ -31,9 +39,11 @@ class Service(Node):
         self.get_logger().info("service is ready")
 
     def order_service_callback(self, request, response):
-        self.get_logger().info("Recieved: {}".format(request.menu))
-        response.message = "へい!{}、お待ち!".format(request.menu)
-        self.get_logger().info("Sending {}".format(response.message))
+        self.get_logger().info(f"Recieved: {request.menu}")
+
+        response.message = f"へい!{request.menu}、お待ち!"
+        self.get_logger().info(f"Sending: {response.message}")
+
         return response
 
 def main():
@@ -69,8 +79,10 @@ class Client(Node):
 
     def send_request(self, menu):
         self.request.menu = menu
+
         self.future = self.order_client.call_async(self.request)
         rclpy.spin_until_future_complete(self, self.future)
+
         return self.future.result()
 
 
@@ -80,10 +92,10 @@ def main():
     node = Client()
     menu = "ラーメン"
 
-    node.get_logger().info("Request: {}".format(menu))
+    node.get_logger().info(f"Request: {menu}")
 
     response = node.send_request(menu)
-    node.get_logger().info("Response: {}".format(response.message))
+    node.get_logger().info(f"Response: {response.message}")
 
     node.destroy_node()
     rclpy.shutdown()
@@ -92,19 +104,57 @@ if __name__ == "__main__":
     main()
 ```
 
+## setup.pyの編集
+
+```py
+from setuptools import find_packages, setup
+
+package_name = 'hello_service'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=find_packages(exclude=['test']),
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ri-one',
+    maintainer_email='ri-one@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
+    entry_points={
+        'console_scripts': [
+            # この2行を追加
+            'server_node = hello_service.server_node:main',
+            'client_node = hello_service.client_node:main',
+        ],
+    },
+)
+```
+
 ## ビルドと実行
 
-```none
+```bash
 cd ~/my_ws
 colcon build --symlink-install
 source install/setup.bash
 ```
 
-```none
+```bash
 ros2 run hello_service server_node
 ros2 run hello_service client_node
+```
+
+```{figure} service-terminal-output.png
+端末での実行画面
 ```
 
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html)
+- [hello_serviceパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_service)
