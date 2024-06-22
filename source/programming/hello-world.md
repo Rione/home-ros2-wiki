@@ -211,7 +211,9 @@ ros2 run hello_world sub_node
 
 すると`Hello world`の文字列ともに数字が両方の端末とも出力されていることが分かります。
 
-![端末の実行画面](hello-world-terminal.png)
+```{figure} hello-world-terminal.png
+端末での実行画面
+```
 
 ## rqt_graphで通信の確認
 
@@ -224,7 +226,9 @@ rqt_graph
 
 すると以下のように通信の様子がグラフで表されます。
 
-![rqt_graphでのトピック通信の様子](hello-world-rqt-graph.png)
+```{figure} hello-world-rqt-graph.png
+rqt_graphでのトピック通信の様子
+```
 
 今回の場合、`/publisher`ノードから`/text`トピックを介して`/subscriber`ノードに通信が行われていることが分かります。
 

@@ -4,7 +4,7 @@
 
 ROSでは複数のノードを同時に立ち上げて、それぞれのノードからデータを送受信したりしています。
 今までは`ros2 run`コマンドで1つ1つノードを立ち上げていましたが、実際には複数のノードをLaunchファイルというもので起動します。
-このLaunchファイルではトピック名やノード名、パラメータを変更出来るので非常に便利です。
+このLaunchファイルではトピック名やノード名、パラメータの値を変更出来るので非常に便利です。
 
 ```{note}
 ここでは
@@ -38,6 +38,11 @@ ROSでは複数のノードを同時に立ち上げて、それぞれのノー�
         - `hello_param`パッケージの`multiply_node.py`
             - `/number`トピックを`/double_number`トピックにリマップ
             - `m_number`パラメータを`4`に変更
+
+```{note}
+今回はPythonでLaunchファイル書きますが、YAMLやROS 1時代ののXMLでもLaunchファイルを書けます。
+詳しくは[公式のチュートリアル(英語)](https://docs.ros.org/en/humble/How-To-Guides/Launch-file-different-formats.html)を読んでください。
+```
 
 ## パッケージの作成
 
@@ -219,13 +224,13 @@ rqt_graph
 rqt
 ```
 
+```{figure} two-double-rqt-graph.png
 rqt_graph
+```
 
-![two-double-rqt-graph.png](two-double-rqt-graph.png)
-
+```{figure} 1715350303932826969.png
 rqtでトピックを見た様子
-
-![1715350303932826969.png](1715350303932826969.png)
+```
 
 `/number`トピックの値を2倍したものが`/double_number`へ、`/double_number`トピックの値をさらに2倍したものが`/quad_number`へ送られているのが分かります。
 
@@ -237,13 +242,15 @@ rqt_graph
 rqt
 ```
 
+```{figure} double-and-multiply-rqt-graph.png
 rqt_graph
+```
 
-![double-and-multiply-rqt-graph.png](double-and-multiply-rqt-graph.png)
 
+```{figure} 1715350785700950579.png
 rqtでトピックを見た様子
+```
 
-![1715350785700950579.png](1715350785700950579.png)
 
 `/number`トピックの値を2倍したものが`/double_number`へ、`/double_number`トピックの値をさらにパラメータで指定した4倍にしたものが`/multiplied_number`へ送られているのが分かります。
 
