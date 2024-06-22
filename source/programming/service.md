@@ -39,9 +39,11 @@ class Service(Node):
         self.get_logger().info("service is ready")
 
     def order_service_callback(self, request, response):
-        self.get_logger().info("Recieved: {}".format(request.menu))
-        response.message = "へい!{}、お待ち!".format(request.menu)
-        self.get_logger().info("Sending {}".format(response.message))
+        self.get_logger().info(f"Recieved: {request.menu}")
+
+        response.message = f"へい!{request.menu}、お待ち!"
+        self.get_logger().info(f"Sending: {response.message}")
+
         return response
 
 def main():
@@ -77,8 +79,10 @@ class Client(Node):
 
     def send_request(self, menu):
         self.request.menu = menu
+
         self.future = self.order_client.call_async(self.request)
         rclpy.spin_until_future_complete(self, self.future)
+
         return self.future.result()
 
 
@@ -88,10 +92,10 @@ def main():
     node = Client()
     menu = "ラーメン"
 
-    node.get_logger().info("Request: {}".format(menu))
+    node.get_logger().info(f"Request: {menu}")
 
     response = node.send_request(menu)
-    node.get_logger().info("Response: {}".format(response.message))
+    node.get_logger().info(f"Response: {response.message}")
 
     node.destroy_node()
     rclpy.shutdown()
@@ -144,6 +148,10 @@ source install/setup.bash
 ```bash
 ros2 run hello_service server_node
 ros2 run hello_service client_node
+```
+
+```{figure} service-terminal-output.png
+端末での実行画面
 ```
 
 ## 参照

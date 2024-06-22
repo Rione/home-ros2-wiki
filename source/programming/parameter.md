@@ -109,6 +109,10 @@ ros2 run hello_param multiply_node --ros-args -p m_number:=3
 
 `multiply_node`が`/number`トピックの3倍した数を`multiplied_number`トピックにパブリッシュしていれば成功!
 
+```{figure} parameter-terminal-output.png
+端末での実行画面
+```
+
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html)

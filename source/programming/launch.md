@@ -224,11 +224,11 @@ rqt_graph
 rqt
 ```
 
-```{figure} two-double-rqt-graph.png
+```{figure} launch-two-double-rqt-graph.png
 rqt_graph
 ```
 
-```{figure} 1715350303932826969.png
+```{figure} launch-two-double-rqt.png
 rqtでトピックを見た様子
 ```
 
@@ -242,15 +242,13 @@ rqt_graph
 rqt
 ```
 
-```{figure} double-and-multiply-rqt-graph.png
+```{figure} launch-double-and-multiply-rqt-graph.png
 rqt_graph
 ```
 
-
-```{figure} 1715350785700950579.png
+```{figure} launch-double-and-multiply-rqt.png
 rqtでトピックを見た様子
 ```
-
 
 `/number`トピックの値を2倍したものが`/double_number`へ、`/double_number`トピックの値をさらにパラメータで指定した4倍にしたものが`/multiplied_number`へ送られているのが分かります。
 

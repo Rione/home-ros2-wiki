@@ -8,6 +8,7 @@ programming/communication-type.md
 programming/custom-message.md
 programming/topic.md
 programming/service.md
+programming/action.md
 programming/parameter.md
 programming/launch.md
 ```

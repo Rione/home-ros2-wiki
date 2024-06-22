@@ -54,7 +54,7 @@ $ tree
 
 ## コードの編集
 
-今回はコピペで構わないので以下のPythonのコードを`hello_world/pub_node.py`に書いてください。
+今回はコピペで構わないので以下のPythonのコードを`hello_world/hello_world/pub_node.py`に書いてください。
 
 ```py
 import rclpy
@@ -70,9 +70,10 @@ class Publisher(Node):
 
     def timer_callback(self):
         msg = String()
-        msg.data = "Hello world {}".format(self.i)
+        msg.data = f"Hello world {self.i}"
         self.text_pub.publish(msg)
-        self.get_logger().info("Publishing {}".format(msg.data))
+
+        self.get_logger().info(f"Publishing {msg.data}")
         self.i += 1
 
 def main(args=None):
@@ -88,7 +89,7 @@ if __name__ == "__main__":
     main()
 ```
 
-同じように以下のコードを`hello_world/sub_node.py`に書いてください。
+同じように以下のコードを`hello_world/hello_world/sub_node.py`に書いてください。
 
 ```py
 import rclpy
@@ -101,7 +102,7 @@ class Subscriber(Node):
         self.text_sub = self.create_subscription(String, "text", self.text_callback, 10)
 
     def text_callback(self, msg):
-        self.get_logger().info("Subscribed {}".format(msg.data))
+        self.get_logger().info(f"Subscribed {msg.data}")
 
 def main(args=None):
     rclpy.init(args=args)
@@ -134,7 +135,7 @@ if __name__ == "__main__":
   <name>hello_world</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="shuto.tamaoka@gmail.com">ri-one</maintainer>
+  <maintainer email="ri-one@todo.todo">ri-one</maintainer>
   <license>TODO: License declaration</license>
 
   <test_depend>ament_copyright</test_depend>
@@ -142,27 +143,56 @@ if __name__ == "__main__":
   <test_depend>ament_pep257</test_depend>
   <test_depend>python3-pytest</test_depend>
 
-  <export>
-    <build_type>ament_python</build_type>
-  </export>
-
   <!-- この2行を追加 -->
   <exec_depend>rclpy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
 </package>
 ```
 
 ### setup.pyにエントリーポイントを追加
 
-`setup.py`の`entry_points`の部分を以下のように編集してください。
+`setup.py`の`entry_points`の`console_scripts`に以下の2行を追加してください。
 
 ```py
+'pub_node = hello_world.pub_node:main',
+'sub_node = hello_world.sub_node:main',
+```
+
+追加すると以下のような`setup.py`ファイルになっていると思います。
+
+```py
+from setuptools import find_packages, setup
+
+package_name = 'hello_world'
+
+setup(
+    name=package_name,
+    version='0.0.0',
+    packages=find_packages(exclude=['test']),
+    data_files=[
+        ('share/ament_index/resource_index/packages',
+            ['resource/' + package_name]),
+        ('share/' + package_name, ['package.xml']),
+    ],
+    install_requires=['setuptools'],
+    zip_safe=True,
+    maintainer='ri-one',
+    maintainer_email='ri-one@todo.todo',
+    description='TODO: Package description',
+    license='TODO: License declaration',
+    tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            # この2行を追加
             'pub_node = hello_world.pub_node:main',
             'sub_node = hello_world.sub_node:main',
         ],
     },
+)
 ```
 
 `console_scripts`の中の配列は`実行名 = パッケージ名.ファイル名:関数`の形式になっています。
@@ -211,7 +241,7 @@ ros2 run hello_world sub_node
 
 すると`Hello world`の文字列ともに数字が両方の端末とも出力されていることが分かります。
 
-```{figure} hello-world-terminal.png
+```{figure} hello-world-terminal-output.png
 端末での実行画面
 ```
 

@@ -43,7 +43,8 @@ class Iteration(Node):
         msg = UInt64()
         msg.data = self.i
         self.number_pub.publish(msg)
-        self.get_logger().info("Publishing {}".format(msg.data))
+
+        self.get_logger().info(f"Publishing {msg.data}")
 
         self.i += 1
 
@@ -76,12 +77,13 @@ class Double(Node):
         self.double_number_pub = self.create_publisher(UInt64, "double_number", 10)
 
     def number_callback(self, sub_msg):
-        self.get_logger().info("Subscribed {}".format(sub_msg.data))
-        
+        self.get_logger().info(f"Subscribed {sub_msg.data}")
+
         pub_msg = UInt64()
         pub_msg.data = sub_msg.data * 2
         self.double_number_pub.publish(pub_msg)
-        self.get_logger().info("Publishing {}".format(pub_msg.data))
+
+        self.get_logger().info(f"Publishing {pub_msg.data}")
 
 def main(args=None):
     rclpy.init(args=args)
@@ -140,6 +142,10 @@ source install/setup.bash
 ```bash
 ros2 run hello_topic iteration_node
 ros2 run hello_topic double_node
+```
+
+```{figure} topic-terminal-output.png
+端末での実行画面
 ```
 
 ## 課題

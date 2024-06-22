@@ -5,8 +5,10 @@
 
 今回作ったメッセージファイルは以降の
 {doc}`/programming/topic`
-や
+、
 {doc}`/programming/service`
+や
+{doc}`/programming/action`
 の講義で使うので、この部分は飛ばさないようにお願いします。
 
 ## パッケージの作成
@@ -22,17 +24,17 @@ ros2 pkg create --build-type ament_cmake hello_msgs
 `.msg`ファイルの形式は以下のようになっています。
 
 ```none
-型 Foo
-型 Bar
+型 foo
+型 bar
 ```
 
 トピック通信で使うメッセージファイルはパッケージの`msg`フォルダで`.msg`ファイルで定義します。
 
 ```bash
-mkdir srv
+mkdir msg
 ```
 
-`hello_msgs/srv/Person.msg`を以下の内容で保存してください。
+`hello_msgs/msg/Person.msg`を以下の内容で保存してください。
 
 ```none
 string name
@@ -66,6 +68,37 @@ string menu
 string message
 ```
 
+### .actionファイル
+
+`.action`ファイルの形式は以下のようになっています。
+
+```none
+型 goal
+---
+型 result
+---
+型 feedback
+```
+
+`goal`の部分はアクションサーバに送るもので、`result`の部分はアクションサーバかた送られてくるものです。
+下の`feedback`の部分は`result`が送られるまでの間に途中経過としてアクションサーバから送られてくるものです。
+
+アクション通信で使うメッセージファイルはパッケージの`action`フォルダで`.action`ファイルで定義します。
+
+```bash
+mkdir action
+```
+
+`hello_msgs/action/Sum.action`を以下の内容で保存してください。
+
+```none
+uint64 goal
+---
+uint64 sum
+---
+uint64 tmp_sum
+```
+
 ## CMakelists.txtの編集
 
 `CMakelists.txt`に以下を追加してください。
@@ -76,6 +109,7 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Person.msg"
   "srv/Order.srv"
+  "action/Sum.action"
 )
 ```
 
@@ -94,13 +128,12 @@ find_package(ament_cmake REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
-
-# 追加
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Person.msg"
   "srv/Order.srv"
+  "action/Sum.action"
 )
 
 if(BUILD_TESTING)
@@ -120,7 +153,7 @@ ament_package()
 
 ## package.xmlの編集
 
-以下の3行を`package.xml`に追加して依存関係を定義してください。
+以下を`package.xml`に追加して依存関係を定義してください。
 
 ```xml
 <buildtool_depend>rosidl_default_generators</buildtool_depend>
@@ -137,7 +170,7 @@ ament_package()
   <name>hello_msgs</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="shuto.tamaoka@gmail.com">ri-one</maintainer>
+  <maintainer email="ri-one@todo.todo">ri-one</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
@@ -145,6 +178,7 @@ ament_package()
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
+  <!-- この3行を追加 -->
   <buildtool_depend>rosidl_default_generators</buildtool_depend>
   <exec_depend>rosidl_default_runtime</exec_depend>
   <member_of_group>rosidl_interface_packages</member_of_group>
@@ -173,6 +207,12 @@ $ ros2 interface show hello_msgs/srv/Order
 string menu
 ---
 string message
+$ ros2 interface show hello_msgs/action/Sum 
+uint64 goal
+---
+uint64 sum
+---
+uint64 tmp_sum
 ```
 
 ## 参照
