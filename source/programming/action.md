@@ -180,3 +180,4 @@ ros2 run hello_action client_node
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html](https://docs.ros.org/en/humble/Tutorials/Intermediate/Writing-an-Action-Server-Client/Py.html)
+- [hello_actionパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_action)

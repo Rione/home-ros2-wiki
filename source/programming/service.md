@@ -157,3 +157,4 @@ ros2 run hello_service client_node
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Service-And-Client.html)
+- [hello_serviceパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_service)

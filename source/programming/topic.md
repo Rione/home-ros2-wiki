@@ -164,3 +164,4 @@ ros2 run hello_topic double_node
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Writing-A-Simple-Py-Publisher-And-Subscriber.html)
+- [hello_topicパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_topic)

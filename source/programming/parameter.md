@@ -117,3 +117,4 @@ ros2 run hello_param multiply_node --ros-args -p m_number:=3
 
 - [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Using-Parameters-In-A-Class-Python.html)
 - [https://www.theconstruct.ai/how-to-manipulate-parameters-at-runtime-ros2-humble-python-tutorial/](https://www.theconstruct.ai/how-to-manipulate-parameters-at-runtime-ros2-humble-python-tutorial/)
+- [hello_paramパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_param)

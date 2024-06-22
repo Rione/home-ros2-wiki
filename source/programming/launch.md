@@ -255,3 +255,4 @@ rqtでトピックを見た様子
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Creating-Launch-Files.html)
+- [hello_launchパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_launch)

@@ -218,3 +218,4 @@ uint64 tmp_sum
 ## 参照
 
 - [https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html](https://docs.ros.org/en/humble/Tutorials/Beginner-Client-Libraries/Custom-ROS2-Interfaces.html)
+- [hello_msgsパッケージのソースコード](https://github.com/Rione/home_ros2_workshop/tree/main/hello_msgs)
