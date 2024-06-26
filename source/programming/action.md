@@ -1,25 +1,30 @@
 # アクション通信
 
-## アクション通信とは?
-
 アクション通信は一言で言うと、前回学んだ{doc}`/programming/topic`と{doc}`/programming/service`の両方を組み合わせたようなものです。
+リクエスを送る**クライアント**と、受け取ったリクエスに応じてレスポンスを返す**サーバ**が存在します。
+アクション通信の特徴として、サーバはレスポンスを返すまで、途中経過の値をクライアントに送り続けることが出来ます。
 
 ```{note}
 アクション通信は使う頻度が少ない(?)ので飛ばしても大丈夫です。
 必要になったら勉強してください。
 ```
 
-### 今回の目標
+## 今回の目標
 
 今回は以下のようなノードをもつ`hello_action`パッケージを作ってみましょう。
 
 - `server_node.py`
-    - `hello_msgs/Sum`型の`/sum`アクションからメッセージを受け取る
-    - 1から受け取ったメッセージまでの総和をクライアントに送る
-        - 途中経過の値をfeedbackとして`tmp_sum`として送る
+    - `hello_msgs/Sum`型の`/sum`アクションからリクエスをを受け取り、クライアントにレスポンスを返す
+    - `goal`をクライアントから受け取り、1から`goal`までの総和をクライアントに送る
+        - 目標の値(`goal`)をgoalとして受け取る
+        - 総和の途中経過の値(`tmp_sum`)をfeedbackとして送る
+        - 総和(`sum`)をresultとして送る
 - `client_node.py`
-    - `hello_msgs/Sum`型の`/sum`アクションに送ってサーバからレスポンスを受け取る
-        - 途中経過の値のfeedbackを受け取る
+    - `hello_msgs/Sum`型の`/sum`アクションにリクエストを送って、サーバからレスポンスを受け取る
+    - `goal`をサーバに送り、1から`goal`までの総和をサーバから受け取る
+        - 目標の値(`goal`)をgoalとして送る
+        - 総和の途中経過の値(`tmp_sum`)をfeedbackとして受け取る
+        - 総和(`sum`)をresultとして受け取る
 
 ## パッケージの作成
 
@@ -29,7 +34,7 @@ ros2 pkg create --build-type ament_python hello_action
 
 ## server_node.pyのコード
 
-`hello_action/hello_action/server_node.py`を以下の内容で書き込む。
+`hello_action/server_node.py`を以下の内容で書き込む。
 
 ```py
 import rclpy
@@ -73,7 +78,7 @@ def main(args=None):
 
 ## client_node.pyのコード
 
-`hello_action/hello_action/client_node.py`を以下の内容で書き込む。
+`hello_action/client_node.py`を以下の内容で書き込む。
 
 ```py
 import rclpy

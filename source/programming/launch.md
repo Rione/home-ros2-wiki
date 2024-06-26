@@ -1,10 +1,8 @@
 # Launchファイル
 
-## Launchファイルとは?
-
 ROSでは複数のノードを同時に立ち上げて、それぞれのノードからデータを送受信したりしています。
 今までは`ros2 run`コマンドで1つ1つノードを立ち上げていましたが、実際には複数のノードをLaunchファイルというもので起動します。
-このLaunchファイルではトピック名やノード名、パラメータの値を変更出来るので非常に便利です。
+このLaunchファイルからトピック名やノード名、パラメータの値を変更出来るので非常に便利です。
 
 ```{note}
 ここでは
@@ -15,7 +13,7 @@ ROSでは複数のノードを同時に立ち上げて、それぞれのノー�
 まだ作ってない人は先に、そちらをご覧ください。
 ```
 
-### 今回の目標
+## 今回の目標
 
 今回は以下のようなLaunchファイルをもつ`hello_launch`パッケージを作りましょう。
 
@@ -39,8 +37,8 @@ ROSでは複数のノードを同時に立ち上げて、それぞれのノー�
             - `/number`トピックを`/double_number`トピックにリマップ
             - `m_number`パラメータを`4`に変更
 
-```{note}
-今回はPythonでLaunchファイル書きますが、YAMLやROS 1時代ののXMLでもLaunchファイルを書けます。
+```{tip}
+今回はPythonでLaunchファイルを書きますが、YAMLやROS 1時代のXMLでもLaunchファイルを書けます。
 詳しくは[公式のチュートリアル(英語)](https://docs.ros.org/en/humble/How-To-Guides/Launch-file-different-formats.html)を読んでください。
 ```
 
@@ -48,6 +46,11 @@ ROSでは複数のノードを同時に立ち上げて、それぞれのノー�
 
 ```bash
 ros2 pkg create --build-type ament_cmake hello_launch
+```
+
+Launchファイルを保存する`launch`ディレクトリを作成します。
+
+```bash
 cd hello_launch
 mkdir launch
 ```
@@ -103,7 +106,7 @@ ament_package()
 
 ## hello.launch.pyのコード
 
-`hello_launch/launch/hello.launch.py`を以下の内容で書き込む。
+`launch/hello.launch.py`を以下の内容で書き込む。
 
 ```py
 from launch import LaunchDescription
@@ -126,7 +129,7 @@ def generate_launch_description():
 
 ## two_double.launch.pyのコード
 
-`hello_launch/launch/two_double.launch.py`を以下の内容で書き込む。
+`launch/two_double.launch.py`を以下の内容で書き込む。
 
 ```py
 from launch import LaunchDescription
@@ -158,7 +161,7 @@ def generate_launch_description():
 
 ## double_and_multiply.launch.pyのコード
 
-`hello_launch/launch/double_and_multiply.launch.py`を以下の内容で書き込む。
+`launch/double_and_multiply.launch.py`を以下の内容で書き込む。
 
 ```py
 from launch import LaunchDescription

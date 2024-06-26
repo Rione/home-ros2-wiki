@@ -1,9 +1,9 @@
 # パラメータ
 
-## パラメータとは?
-
 ROSではパラメータというものを設定することが出来ます。
-これはプログラムを実行する前に値を任意に変更することが出来て、ソースコードを変えることなく自由に値を変えられます。
+これはプログラムを実行する前に値を任意に変更することが出来て、ソースコードを変えることなく値を自由に変えられます。
+
+## 今回の目標
 
 今回は以下のようなノードをもつ`hello_param`パッケージを作ってみましょう
 
@@ -19,7 +19,7 @@ ros2 pkg create --build-type ament_python hello_param
 
 ## multiply_node.pyのコード
 
-`hello_param/hello_param/multiply_node.py`を以下の内容で書き込む。
+`hello_param/multiply_node.py`を以下の内容で書き込む。
 
 ```py
 import rclpy
