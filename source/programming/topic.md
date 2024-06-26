@@ -1,12 +1,10 @@
 # トピック通信
 
-## トピック通信とは?
-
 トピック通信ではデータを送る**パブリッシャ**とデータを受け取る**サブスクライバ**が存在します。
 パブリッシャは任意のトピックにデータを連続的に送り続け、サブスクライバは任意のトピックに送られたデータを受け取ることができます。
 UDP通信をイメージすると分かりやすいと思います。
 
-### 今回の目標
+## 今回の目標
 
 今回は以下のようなノードをもつ`hello_topic`パッケージを作ってみましょう
 
@@ -25,7 +23,7 @@ ros2 pkg create --build-type ament_python hello_topic
 
 ## iteration_node.pyのコード
 
-`hello_topic/hello_topic/iteration_node.py`を以下の内容で書き込む。
+`hello_topic/iteration_node.py`を以下の内容で書き込む。
 
 ```py
 import rclpy
@@ -63,7 +61,7 @@ if __name__ == "__main__":
 
 ## double_node.pyのコード
 
-`hello_topic/hello_topic/double_node.py`を以下の内容で書き込む。
+`hello_topic/double_node.py`を以下の内容で書き込む。
 
 ```py
 import rclpy

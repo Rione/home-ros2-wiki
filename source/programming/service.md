@@ -1,12 +1,10 @@
 # サービス通信
 
-## サービス通信とは?
-
 サービス通信では**クライアント**と**サーバ**が存在します。
 クライアントはデータをリクエストしてサーバからのレスポンスを受け取り、サーバはクライアントからのリクエストに応じてレスポンスを送ります。
 TCP/IP通信をイメージすると分かりやすいと思います。
 
-### 今回の目標
+## 今回の目標
 
 今回は以下のようなノードをもつ`hello_service`パッケージを作ってみましょう。
 
@@ -25,7 +23,7 @@ ros2 pkg create --build-type ament_python hello_service
 
 ## server_node.pyのコード
 
-`hello_service/hello_service/server_node.py`を以下の内容で書き込む。
+`hello_service/server_node.py`を以下の内容で書き込む。
 
 ```py
 import rclpy
@@ -60,7 +58,7 @@ if __name__ == "__main__":
 
 ## client_node.pyのコード
 
-`hello_service/hello_service/client_node.py`を以下の内容で書き込む。
+`hello_service/client_node.py`を以下の内容で書き込む。
 
 ```py
 import rclpy

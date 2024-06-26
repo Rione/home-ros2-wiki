@@ -27,3 +27,6 @@ language = 'ja'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'alabaster'
+html_theme_options = {
+    'fixed_sidebar': True, # do not move sidebar while scrolling
+}

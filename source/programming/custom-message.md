@@ -34,7 +34,7 @@ ros2 pkg create --build-type ament_cmake hello_msgs
 mkdir msg
 ```
 
-`hello_msgs/msg/Person.msg`を以下の内容で保存してください。
+`msg/Person.msg`を以下の内容で保存してください。
 
 ```none
 string name
@@ -60,7 +60,7 @@ uint8 age
 mkdir srv
 ```
 
-`hello_msgs/srv/Order.srv`を以下の内容で保存してください。
+`srv/Order.srv`を以下の内容で保存してください。
 
 ```none
 string menu
@@ -89,7 +89,7 @@ string message
 mkdir action
 ```
 
-`hello_msgs/action/Sum.action`を以下の内容で保存してください。
+`action/Sum.action`を以下の内容で保存してください。
 
 ```none
 uint64 goal
@@ -203,10 +203,16 @@ source install/setup.bash
 $ ros2 interface show hello_msgs/msg/Person 
 string name
 uint8 age
+```
+
+```bash
 $ ros2 interface show hello_msgs/srv/Order
 string menu
 ---
 string message
+```
+
+```bash
 $ ros2 interface show hello_msgs/action/Sum 
 uint64 goal
 ---

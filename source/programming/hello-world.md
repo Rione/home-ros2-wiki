@@ -48,13 +48,13 @@ $ tree
 
 この`hello_world`パッケージは`ament_python`形式なので上のようになっています。
 
-```{note}
+```{caution}
 `hello_world/__init__.py`や`resouce/hello_world`ファイルは空ファイルですが、パッケージに必要なので消さないでください。
 ```
 
 ## コードの編集
 
-今回はコピペで構わないので以下のPythonのコードを`hello_world/hello_world/pub_node.py`に書いてください。
+今回はコピペで構わないので以下のPythonのコードを`hello_world/pub_node.py`に書いてください。
 
 ```py
 import rclpy
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     main()
 ```
 
-同じように以下のコードを`hello_world/hello_world/sub_node.py`に書いてください。
+同じように以下のコードを`hello_world/sub_node.py`に書いてください。
 
 ```py
 import rclpy
@@ -206,8 +206,8 @@ cd ~/my_ws
 colcon build
 ```
 
-```{note}
-必ず、ワークスペースのルートディレクトリで`colcon build`コマンドを実行してください。
+```{caution}
+必ず、ワークスペースのルートディレクトリ(`~/my_ws`)で`colcon build`コマンドを実行してください。
 ```
 
 `colcon build`コマンドを実行すると`my_ws`に新たに、`build`、`install`、`log`ディレクトリが作成されます。
